@@ -10,12 +10,12 @@ import (
 )
 
 type AccountGrpcClientV1 struct {
-	clients.GrpcClient
+	*clients.GrpcClient
 }
 
 func NewAccountGrpcClientV1() *AccountGrpcClientV1 {
 	return &AccountGrpcClientV1{
-		GrpcClient: *clients.NewGrpcClient("accounts_v1.Accounts"),
+		GrpcClient: clients.NewGrpcClient("accounts_v1.Accounts"),
 	}
 }
 
