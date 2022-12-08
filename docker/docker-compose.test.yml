@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+
+  # test:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/Dockerfile.test
+  #   image: ${IMAGE:-mst/test}
+  #   command: ${TEST_CMD:-go test ./test/...}
+  #   links:
+  #     - service
+  #   environment:
+  #     - GRPC_HOST=service
+  #     - GRPC_PORT=8090
+  #     - HTTP_HOST=service
+  #     - HTTP_PORT=8080
+
+  service:
+    image: pipdevs/service-accounts-node:latest
+    environment:
+      - HTTP_ENABLED=true
+      - GRPC_ENABLED=true
+      - GRPC_PORT=8090
+      - HTTP_PORT=8080
+    ports:
+      - 8080:8080
+      - 8090:8090

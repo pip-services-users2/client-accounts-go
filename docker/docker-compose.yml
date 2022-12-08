@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+
+  service:
+    image: pipdevs/service-accounts-node:latest
+    # links:
+    #   - mongo
+    #   - couchbase
+    environment:
+      - HTTP_ENABLED=true
+      - GRPC_ENABLED=true
+      # - MONGO_ENABLED=true
+      # - MONGO_SERVICE_HOST=mongo
+      # - MONGO_SERVICE_PORT=27017
+      # - MONGO_DB=test
+      # - COUCHBASE_SERVICE_HOST=couchbase
+      # - COUCHBASE_SERVICE_PORT=8091
+      # - COUCHBASE_USER=Administrator
+      # - COUCHBASE_PASS=password
+    ports:
+      - "8080:8080"
+      - "8090:8090"
+
+  # mongo:
+  #   image: mongo:latest
+
+  # couchbase:
+  #   image: couchbase/server-sandbox:5.5.1
