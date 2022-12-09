@@ -12,16 +12,18 @@ import (
 
 type AccountsClientFixtureV1 struct {
 	Client version1.IAccountsClientV1
+
+	ACCOUNT1 *version1.AccountV1
+	ACCOUNT2 *version1.AccountV1
 }
 
-var ACCOUNT_ID1 = data.IdGenerator.NextLong()
-var ACCOUNT_ID2 = data.IdGenerator.NextLong()
-var ACCOUNT1 = version1.NewAccountV1(ACCOUNT_ID1, "Test Account "+ACCOUNT_ID1, ACCOUNT_ID1+"@conceptual.vision")
-var ACCOUNT2 = version1.NewAccountV1(ACCOUNT_ID2, "Test Account "+ACCOUNT_ID2, ACCOUNT_ID2+"@conceptual.vision")
-
 func NewAccountsClientFixtureV1(client version1.IAccountsClientV1) *AccountsClientFixtureV1 {
+	ACCOUNT_ID1 := data.IdGenerator.NextLong()
+	ACCOUNT_ID2 := data.IdGenerator.NextLong()
 	return &AccountsClientFixtureV1{
-		Client: client,
+		Client:   client,
+		ACCOUNT1: version1.NewAccountV1(ACCOUNT_ID1, "Test Account "+ACCOUNT_ID1, ACCOUNT_ID1+"@conceptual.vision"),
+		ACCOUNT2: version1.NewAccountV1(ACCOUNT_ID2, "Test Account "+ACCOUNT_ID2, ACCOUNT_ID2+"@conceptual.vision"),
 	}
 }
 
@@ -38,22 +40,22 @@ func (c *AccountsClientFixtureV1) TestCrudOperations(t *testing.T) {
 	defer c.clear()
 
 	// Create one account
-	account, err := c.Client.CreateAccount(context.Background(), "", ACCOUNT1)
+	account, err := c.Client.CreateAccount(context.Background(), "", c.ACCOUNT1)
 	assert.Nil(t, err)
 
 	assert.NotNil(t, account)
-	assert.Equal(t, account.Name, ACCOUNT1.Name)
-	assert.Equal(t, account.Login, ACCOUNT1.Login)
+	assert.Equal(t, account.Name, c.ACCOUNT1.Name)
+	assert.Equal(t, account.Login, c.ACCOUNT1.Login)
 
 	account1 := account
 
 	// Create another account
-	account, err = c.Client.CreateAccount(context.Background(), "", ACCOUNT2)
+	account, err = c.Client.CreateAccount(context.Background(), "", c.ACCOUNT2)
 	assert.Nil(t, err)
 
 	assert.NotNil(t, account)
-	assert.Equal(t, account.Name, ACCOUNT2.Name)
-	assert.Equal(t, account.Login, ACCOUNT2.Login)
+	assert.Equal(t, account.Name, c.ACCOUNT2.Name)
+	assert.Equal(t, account.Login, c.ACCOUNT2.Login)
 
 	//account2 := account
 
@@ -65,7 +67,7 @@ func (c *AccountsClientFixtureV1) TestCrudOperations(t *testing.T) {
 	assert.True(t, len(page.Data) >= 2)
 
 	// Get account by login
-	account, err = c.Client.GetAccountByIdOrLogin(context.Background(), "", ACCOUNT1.Login)
+	account, err = c.Client.GetAccountByIdOrLogin(context.Background(), "", c.ACCOUNT1.Login)
 	assert.Nil(t, err)
 
 	assert.NotNil(t, account)
@@ -82,7 +84,7 @@ func (c *AccountsClientFixtureV1) TestCrudOperations(t *testing.T) {
 	account1 = account
 
 	// Delete account
-	account, err = c.Client.DeleteAccountById(context.Background(), "", account1.Id)
+	_, err = c.Client.DeleteAccountById(context.Background(), "", account1.Id)
 	assert.Nil(t, err)
 
 	// Try to get deleted account
