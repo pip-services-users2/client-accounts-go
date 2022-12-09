@@ -18,8 +18,8 @@ func NewAccountsHttpCommandableClientV1() *AccountsHttpCommandableClientV1 {
 	}
 }
 
-func (c *AccountsHttpCommandableClientV1) GetAccounts(ctx context.Context, correlationId string, filter data.FilterParams,
-	paging cdata.PagingParams) (result cdata.DataPage[*AccountV1], err error) {
+func (c *AccountsHttpCommandableClientV1) GetAccounts(ctx context.Context, correlationId string, filter *data.FilterParams,
+	paging *cdata.PagingParams) (result cdata.DataPage[*AccountV1], err error) {
 
 	params := cdata.NewAnyValueMapFromTuples(
 		"filter", filter,

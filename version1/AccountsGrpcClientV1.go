@@ -19,8 +19,8 @@ func NewAccountGrpcClientV1() *AccountGrpcClientV1 {
 	}
 }
 
-func (c *AccountGrpcClientV1) GetAccounts(ctx context.Context, correlationId string, filter data.FilterParams,
-	paging data.PagingParams) (result data.DataPage[*AccountV1], err error) {
+func (c *AccountGrpcClientV1) GetAccounts(ctx context.Context, correlationId string, filter *data.FilterParams,
+	paging *data.PagingParams) (result data.DataPage[*AccountV1], err error) {
 	timing := c.Instrument(ctx, correlationId, "accounts_v1.get_account_by_id")
 	defer timing.EndTiming(ctx, err)
 
@@ -28,12 +28,16 @@ func (c *AccountGrpcClientV1) GetAccounts(ctx context.Context, correlationId str
 		CorrelationId: correlationId,
 	}
 
-	req.Filter = filter.Value()
+	if filter != nil {
+		req.Filter = filter.Value()
+	}
 
-	req.Paging = &protos.PagingParams{
-		Skip:  paging.GetSkip(0),
-		Take:  (int32)(paging.GetTake(100)),
-		Total: paging.Total,
+	if paging != nil {
+		req.Paging = &protos.PagingParams{
+			Skip:  paging.GetSkip(0),
+			Take:  (int32)(paging.GetTake(100)),
+			Total: paging.Total,
+		}
 	}
 
 	reply := new(protos.AccountPageReply)

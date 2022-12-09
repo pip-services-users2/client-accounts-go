@@ -28,7 +28,7 @@ func NewAccountsClientFixtureV1(client version1.IAccountsClientV1) *AccountsClie
 }
 
 func (c *AccountsClientFixtureV1) clear() {
-	page, _ := c.Client.GetAccounts(context.Background(), "", *data.NewEmptyFilterParams(), *data.NewEmptyPagingParams())
+	page, _ := c.Client.GetAccounts(context.Background(), "", data.NewEmptyFilterParams(), data.NewEmptyPagingParams())
 
 	for _, account := range page.Data {
 		c.Client.DeleteAccountById(context.Background(), "", account.Id)
@@ -60,7 +60,7 @@ func (c *AccountsClientFixtureV1) TestCrudOperations(t *testing.T) {
 	//account2 := account
 
 	// Get all accounts
-	page, err1 := c.Client.GetAccounts(context.Background(), "", *data.NewEmptyFilterParams(), *data.NewEmptyPagingParams())
+	page, err1 := c.Client.GetAccounts(context.Background(), "", data.NewEmptyFilterParams(), data.NewEmptyPagingParams())
 	assert.Nil(t, err1)
 
 	assert.NotNil(t, page)

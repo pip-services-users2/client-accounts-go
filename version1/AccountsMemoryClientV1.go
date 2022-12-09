@@ -34,8 +34,8 @@ func NewEmptyAccountsMemoryClientV1() *AccountsMemoryClientV1 {
 	return NewAccountsMemoryClientV1(nil)
 }
 
-func (c *AccountsMemoryClientV1) GetAccounts(ctx context.Context, correlationId string, filter data.FilterParams,
-	paging cdata.PagingParams) (result cdata.DataPage[*AccountV1], err error) {
+func (c *AccountsMemoryClientV1) GetAccounts(ctx context.Context, correlationId string, filter *data.FilterParams,
+	paging *cdata.PagingParams) (result cdata.DataPage[*AccountV1], err error) {
 
 	items := make([]*AccountV1, 0)
 	for _, v := range c.accounts {

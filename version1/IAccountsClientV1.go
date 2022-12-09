@@ -7,8 +7,8 @@ import (
 )
 
 type IAccountsClientV1 interface {
-	GetAccounts(ctx context.Context, correlationId string, filter data.FilterParams,
-		paging data.PagingParams) (result data.DataPage[*AccountV1], err error)
+	GetAccounts(ctx context.Context, correlationId string, filter *data.FilterParams,
+		paging *data.PagingParams) (result data.DataPage[*AccountV1], err error)
 
 	GetAccountById(ctx context.Context, correlationId string, id string) (result *AccountV1, err error)
 
