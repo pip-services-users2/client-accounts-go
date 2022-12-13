@@ -9,16 +9,16 @@ import (
 	"github.com/pip-services3-gox/pip-services3-commons-gox/config"
 )
 
-type accountsHttpCommandableClientV1Test struct {
-	client  *version1.AccountsHttpCommandableClientV1
+type AccountsCommandableHttpClientV1Test struct {
+	client  *version1.AccountsCommandableHttpClientV1
 	fixture *AccountsClientFixtureV1
 }
 
-func newAccountsHttpCommandableClientV1Test() *accountsHttpCommandableClientV1Test {
-	return &accountsHttpCommandableClientV1Test{}
+func newAccountsCommandableHttpClientV1Test() *AccountsCommandableHttpClientV1Test {
+	return &AccountsCommandableHttpClientV1Test{}
 }
 
-func (c *accountsHttpCommandableClientV1Test) setup(t *testing.T) *AccountsClientFixtureV1 {
+func (c *AccountsCommandableHttpClientV1Test) setup(t *testing.T) *AccountsClientFixtureV1 {
 	var HTTP_HOST = os.Getenv("HTTP_HOST")
 	if HTTP_HOST == "" {
 		HTTP_HOST = "localhost"
@@ -34,7 +34,7 @@ func (c *accountsHttpCommandableClientV1Test) setup(t *testing.T) *AccountsClien
 		"connection.port", HTTP_PORT,
 	)
 
-	c.client = version1.NewAccountsHttpCommandableClientV1()
+	c.client = version1.NewAccountsCommandableHttpClientV1()
 	c.client.Configure(context.Background(), httpConfig)
 	c.client.Open(context.Background(), "")
 
@@ -43,12 +43,12 @@ func (c *accountsHttpCommandableClientV1Test) setup(t *testing.T) *AccountsClien
 	return c.fixture
 }
 
-func (c *accountsHttpCommandableClientV1Test) teardown(t *testing.T) {
+func (c *AccountsCommandableHttpClientV1Test) teardown(t *testing.T) {
 	c.client.Close(context.Background(), "")
 }
 
 func TestHttpCrudOperations(t *testing.T) {
-	c := newAccountsHttpCommandableClientV1Test()
+	c := newAccountsCommandableHttpClientV1Test()
 	fixture := c.setup(t)
 	defer c.teardown(t)
 

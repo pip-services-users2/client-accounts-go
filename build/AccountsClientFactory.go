@@ -24,7 +24,7 @@ func NewAccountsClientFactory() *AccountsClientFactory {
 	// c.RegisterType(nullClientDescriptor, clients1.NewAccountsNullClientV1)
 	// c.RegisterType(directClientDescriptor, clients1.NewAccountsDirectClientV1)
 	c.RegisterType(memoryClientDescriptor, clients1.NewEmptyAccountsMemoryClientV1)
-	c.RegisterType(cmdHttpClientDescriptor, clients1.NewAccountsHttpCommandableClientV1)
+	c.RegisterType(cmdHttpClientDescriptor, clients1.NewAccountsCommandableHttpClientV1)
 	c.RegisterType(grpcClientDescriptor, clients1.NewAccountGrpcClientV1)
 
 	return c
