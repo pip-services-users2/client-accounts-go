@@ -9,16 +9,16 @@ import (
 	"github.com/pip-services3-gox/pip-services3-commons-gox/config"
 )
 
-type AccountsCommandableHttpClientV1Test struct {
-	client  *version1.AccountsCommandableHttpClientV1
+type AccountsHttpClientV1Test struct {
+	client  *version1.AccountsHttpClientV1
 	fixture *AccountsClientFixtureV1
 }
 
-func newAccountsCommandableHttpClientV1Test() *AccountsCommandableHttpClientV1Test {
-	return &AccountsCommandableHttpClientV1Test{}
+func newAccountsHttpClientV1Test() *AccountsHttpClientV1Test {
+	return &AccountsHttpClientV1Test{}
 }
 
-func (c *AccountsCommandableHttpClientV1Test) setup(t *testing.T) *AccountsClientFixtureV1 {
+func (c *AccountsHttpClientV1Test) setup(t *testing.T) *AccountsClientFixtureV1 {
 	var HTTP_HOST = os.Getenv("HTTP_HOST")
 	if HTTP_HOST == "" {
 		HTTP_HOST = "localhost"
@@ -43,12 +43,12 @@ func (c *AccountsCommandableHttpClientV1Test) setup(t *testing.T) *AccountsClien
 	return c.fixture
 }
 
-func (c *AccountsCommandableHttpClientV1Test) teardown(t *testing.T) {
+func (c *AccountsHttpClientV1Test) teardown(t *testing.T) {
 	c.client.Close(context.Background(), "")
 }
 
 func TestHttpCrudOperations(t *testing.T) {
-	c := newAccountsCommandableHttpClientV1Test()
+	c := newAccountsHttpClientV1Test()
 	fixture := c.setup(t)
 	defer c.teardown(t)
 
