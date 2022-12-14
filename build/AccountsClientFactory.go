@@ -7,12 +7,12 @@ import (
 )
 
 type AccountsClientFactory struct {
-	cbuild.Factory
+	*cbuild.Factory
 }
 
 func NewAccountsClientFactory() *AccountsClientFactory {
 	c := &AccountsClientFactory{
-		Factory: *cbuild.NewFactory(),
+		Factory: cbuild.NewFactory(),
 	}
 
 	// nullClientDescriptor := cref.NewDescriptor("pip-services-sasswords", "client", "null", "*", "1.0")
