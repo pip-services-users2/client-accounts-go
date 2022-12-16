@@ -8,17 +8,17 @@ import (
 	cclients "github.com/pip-services3-gox/pip-services3-rpc-gox/clients"
 )
 
-type AccountsHttpClientV1 struct {
+type AccountsCommandableHttpClientV1 struct {
 	*cclients.CommandableHttpClient
 }
 
-func NewAccountsCommandableHttpClientV1() *AccountsHttpClientV1 {
-	return &AccountsHttpClientV1{
+func NewAccountsCommandableHttpClientV1() *AccountsCommandableHttpClientV1 {
+	return &AccountsCommandableHttpClientV1{
 		CommandableHttpClient: cclients.NewCommandableHttpClient("v1/accounts"),
 	}
 }
 
-func (c *AccountsHttpClientV1) GetAccounts(ctx context.Context, correlationId string, filter *data.FilterParams,
+func (c *AccountsCommandableHttpClientV1) GetAccounts(ctx context.Context, correlationId string, filter *data.FilterParams,
 	paging *cdata.PagingParams) (result cdata.DataPage[*AccountV1], err error) {
 
 	params := cdata.NewAnyValueMapFromTuples(
@@ -34,7 +34,7 @@ func (c *AccountsHttpClientV1) GetAccounts(ctx context.Context, correlationId st
 	return cclients.HandleHttpResponse[cdata.DataPage[*AccountV1]](res, correlationId)
 }
 
-func (c *AccountsHttpClientV1) GetAccountById(ctx context.Context, correlationId string, id string) (result *AccountV1, err error) {
+func (c *AccountsCommandableHttpClientV1) GetAccountById(ctx context.Context, correlationId string, id string) (result *AccountV1, err error) {
 
 	params := cdata.NewAnyValueMapFromTuples(
 		"account_id", id,
@@ -48,7 +48,7 @@ func (c *AccountsHttpClientV1) GetAccountById(ctx context.Context, correlationId
 	return cclients.HandleHttpResponse[*AccountV1](res, correlationId)
 }
 
-func (c *AccountsHttpClientV1) GetAccountByLogin(ctx context.Context, correlationId string, login string) (result *AccountV1, err error) {
+func (c *AccountsCommandableHttpClientV1) GetAccountByLogin(ctx context.Context, correlationId string, login string) (result *AccountV1, err error) {
 
 	params := cdata.NewAnyValueMapFromTuples(
 		"login", login,
@@ -62,7 +62,7 @@ func (c *AccountsHttpClientV1) GetAccountByLogin(ctx context.Context, correlatio
 	return cclients.HandleHttpResponse[*AccountV1](res, correlationId)
 }
 
-func (c *AccountsHttpClientV1) GetAccountByIdOrLogin(ctx context.Context, correlationId string, idOrLogin string) (result *AccountV1, err error) {
+func (c *AccountsCommandableHttpClientV1) GetAccountByIdOrLogin(ctx context.Context, correlationId string, idOrLogin string) (result *AccountV1, err error) {
 
 	params := cdata.NewAnyValueMapFromTuples(
 		"id_or_login", idOrLogin,
@@ -76,7 +76,7 @@ func (c *AccountsHttpClientV1) GetAccountByIdOrLogin(ctx context.Context, correl
 	return cclients.HandleHttpResponse[*AccountV1](res, correlationId)
 }
 
-func (c *AccountsHttpClientV1) CreateAccount(ctx context.Context, correlationId string, account *AccountV1) (result *AccountV1, err error) {
+func (c *AccountsCommandableHttpClientV1) CreateAccount(ctx context.Context, correlationId string, account *AccountV1) (result *AccountV1, err error) {
 
 	if account.Id == "" {
 		account.Id = cdata.IdGenerator.NextLong()
@@ -94,7 +94,7 @@ func (c *AccountsHttpClientV1) CreateAccount(ctx context.Context, correlationId 
 	return cclients.HandleHttpResponse[*AccountV1](res, correlationId)
 }
 
-func (c *AccountsHttpClientV1) UpdateAccount(ctx context.Context, correlationId string, account *AccountV1) (result *AccountV1, err error) {
+func (c *AccountsCommandableHttpClientV1) UpdateAccount(ctx context.Context, correlationId string, account *AccountV1) (result *AccountV1, err error) {
 
 	params := cdata.NewAnyValueMapFromTuples(
 		"account", account,
@@ -108,7 +108,7 @@ func (c *AccountsHttpClientV1) UpdateAccount(ctx context.Context, correlationId 
 	return cclients.HandleHttpResponse[*AccountV1](res, correlationId)
 }
 
-func (c *AccountsHttpClientV1) DeleteAccountById(ctx context.Context, correlationId string, id string) (result *AccountV1, err error) {
+func (c *AccountsCommandableHttpClientV1) DeleteAccountById(ctx context.Context, correlationId string, id string) (result *AccountV1, err error) {
 
 	params := cdata.NewAnyValueMapFromTuples(
 		"account_id", id,
