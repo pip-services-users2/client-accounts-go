@@ -9,16 +9,16 @@ import (
 	"github.com/pip-services3-gox/pip-services3-commons-gox/config"
 )
 
-type accountsGrpcCommandableClientV1Test struct {
+type accountsGrpcClientV1Test struct {
 	client  *version1.AccountGrpcClientV1
 	fixture *AccountsClientFixtureV1
 }
 
-func newAccountsGrpcCommandableClientV1Test() *accountsGrpcCommandableClientV1Test {
-	return &accountsGrpcCommandableClientV1Test{}
+func newAccountsGrpcClientV1Test() *accountsGrpcClientV1Test {
+	return &accountsGrpcClientV1Test{}
 }
 
-func (c *accountsGrpcCommandableClientV1Test) setup(t *testing.T) *AccountsClientFixtureV1 {
+func (c *accountsGrpcClientV1Test) setup(t *testing.T) *AccountsClientFixtureV1 {
 	var GRPC_HOST = os.Getenv("GRPC_HOST")
 	if GRPC_HOST == "" {
 		GRPC_HOST = "localhost"
@@ -43,12 +43,12 @@ func (c *accountsGrpcCommandableClientV1Test) setup(t *testing.T) *AccountsClien
 	return c.fixture
 }
 
-func (c *accountsGrpcCommandableClientV1Test) teardown(t *testing.T) {
+func (c *accountsGrpcClientV1Test) teardown(t *testing.T) {
 	c.client.Close(context.Background(), "")
 }
 
 func TestGrpcCrudOperations(t *testing.T) {
-	c := newAccountsGrpcCommandableClientV1Test()
+	c := newAccountsGrpcClientV1Test()
 	fixture := c.setup(t)
 	defer c.teardown(t)
 
