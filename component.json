@@ -1,8 +1,8 @@
 {
-  "name": "client-accounts-node",
+  "name": "client-accounts-go",
   "type": "client",
-  "language": "node",
-  "version": "1.0.0",
+  "language": "go",
+  "version": "1.1.0",
   "build": 0,
   "registry": "pipservices",
   "artifacts": [
