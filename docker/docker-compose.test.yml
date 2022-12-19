@@ -16,7 +16,7 @@ services:
       - HTTP_PORT=8080
 
   service:
-    image: pipdevs/service-accounts-node:latest
+    image: pipservices/service-accounts-node:latest
     environment:
       - HTTP_ENABLED=true
       - GRPC_ENABLED=true
