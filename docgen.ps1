@@ -6,7 +6,7 @@ $ErrorActionPreference = "Stop"
 # Generate image and container names using the data in the "component.json" file
 $component = Get-Content -Path "$PSScriptRoot/component.json" | ConvertFrom-Json
 
-$docImage="$($component.registry)/$($component.name):$($component.version)-$($component.build)-docs"
+$docsImage = "$($component.registry)/$($component.name):$($component.version)-$($component.build)-docs"
 $container=$component.name
 
 # Remove build files
@@ -17,10 +17,10 @@ if (Test-Path "$PSScriptRoot/docs") {
 }
 
 # Build docker image
-docker build -f "$PSScriptRoot/docker/Dockerfile.docs" -t $docImage "$PSScriptRoot/."
+docker build -f "$PSScriptRoot/docker/Dockerfile.docs" -t $docsImage "$PSScriptRoot/."
 
 # Run docgen container
-docker run -d --name $container $docImage
+docker run -d --name $container $docsImage
 # Wait it to start
 Start-Sleep -Seconds 2
 # Generate docs
