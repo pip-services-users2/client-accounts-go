@@ -11,15 +11,15 @@ import (
 	mdata "github.com/pip-services3-gox/pip-services3-data-gox/persistence"
 )
 
-type AccountsMemoryClientV1 struct {
+type AccountsMockClientV1 struct {
 	accounts    []AccountV1
 	maxPageSize int
 	proto       reflect.Type
 }
 
-func NewAccountsMemoryClientV1(accounts []AccountV1) *AccountsMemoryClientV1 {
+func NewAccountsMockClientV1(accounts []AccountV1) *AccountsMockClientV1 {
 
-	c := AccountsMemoryClientV1{
+	c := AccountsMockClientV1{
 		accounts:    make([]AccountV1, 0),
 		maxPageSize: 100,
 		proto:       reflect.TypeOf(AccountV1{}),
@@ -30,11 +30,11 @@ func NewAccountsMemoryClientV1(accounts []AccountV1) *AccountsMemoryClientV1 {
 	return &c
 }
 
-func NewEmptyAccountsMemoryClientV1() *AccountsMemoryClientV1 {
-	return NewAccountsMemoryClientV1(nil)
+func NewEmptyAccountsMockClientV1() *AccountsMockClientV1 {
+	return NewAccountsMockClientV1(nil)
 }
 
-func (c *AccountsMemoryClientV1) GetAccounts(ctx context.Context, correlationId string, filter *data.FilterParams,
+func (c *AccountsMockClientV1) GetAccounts(ctx context.Context, correlationId string, filter *data.FilterParams,
 	paging *cdata.PagingParams) (result cdata.DataPage[*AccountV1], err error) {
 
 	items := make([]*AccountV1, 0)
@@ -45,7 +45,7 @@ func (c *AccountsMemoryClientV1) GetAccounts(ctx context.Context, correlationId 
 	return *cdata.NewDataPage(items, len(c.accounts)), nil
 }
 
-func (c *AccountsMemoryClientV1) GetAccountById(ctx context.Context, correlationId string, id string) (result *AccountV1, err error) {
+func (c *AccountsMockClientV1) GetAccountById(ctx context.Context, correlationId string, id string) (result *AccountV1, err error) {
 
 	for _, v := range c.accounts {
 		if v.Id == id {
@@ -57,7 +57,7 @@ func (c *AccountsMemoryClientV1) GetAccountById(ctx context.Context, correlation
 	return result, nil
 }
 
-func (c *AccountsMemoryClientV1) GetAccountByLogin(ctx context.Context, correlationId string, login string) (result *AccountV1, err error) {
+func (c *AccountsMockClientV1) GetAccountByLogin(ctx context.Context, correlationId string, login string) (result *AccountV1, err error) {
 	for _, v := range c.accounts {
 		if v.Login == login {
 			buf := v
@@ -68,7 +68,7 @@ func (c *AccountsMemoryClientV1) GetAccountByLogin(ctx context.Context, correlat
 	return result, nil
 }
 
-func (c *AccountsMemoryClientV1) GetAccountByIdOrLogin(ctx context.Context, correlationId string, idOrLogin string) (result *AccountV1, err error) {
+func (c *AccountsMockClientV1) GetAccountByIdOrLogin(ctx context.Context, correlationId string, idOrLogin string) (result *AccountV1, err error) {
 	for _, v := range c.accounts {
 		if v.Id == idOrLogin || v.Login == idOrLogin {
 			buf := v
@@ -79,7 +79,7 @@ func (c *AccountsMemoryClientV1) GetAccountByIdOrLogin(ctx context.Context, corr
 	return result, nil
 }
 
-func (c *AccountsMemoryClientV1) CreateAccount(ctx context.Context, correlationId string, account *AccountV1) (result *AccountV1, err error) {
+func (c *AccountsMockClientV1) CreateAccount(ctx context.Context, correlationId string, account *AccountV1) (result *AccountV1, err error) {
 	if account == nil {
 		return nil, nil
 	}
@@ -106,7 +106,7 @@ func (c *AccountsMemoryClientV1) CreateAccount(ctx context.Context, correlationI
 	return &item, nil
 }
 
-func (c *AccountsMemoryClientV1) UpdateAccount(ctx context.Context, correlationId string, account *AccountV1) (result *AccountV1, err error) {
+func (c *AccountsMockClientV1) UpdateAccount(ctx context.Context, correlationId string, account *AccountV1) (result *AccountV1, err error) {
 
 	if account == nil {
 		return nil, nil
@@ -131,7 +131,7 @@ func (c *AccountsMemoryClientV1) UpdateAccount(ctx context.Context, correlationI
 
 }
 
-func (c *AccountsMemoryClientV1) DeleteAccountById(ctx context.Context, correlationId string, id string) (result *AccountV1, err error) {
+func (c *AccountsMockClientV1) DeleteAccountById(ctx context.Context, correlationId string, id string) (result *AccountV1, err error) {
 	var index = -1
 	for i, v := range c.accounts {
 		if v.Id == id {
@@ -148,7 +148,7 @@ func (c *AccountsMemoryClientV1) DeleteAccountById(ctx context.Context, correlat
 	return &item, nil
 }
 
-func (c *AccountsMemoryClientV1) matchString(value string, search string) bool {
+func (c *AccountsMockClientV1) matchString(value string, search string) bool {
 	if value == "" && search == "" {
 		return true
 	}
@@ -158,12 +158,12 @@ func (c *AccountsMemoryClientV1) matchString(value string, search string) bool {
 	return strings.Contains(strings.ToLower(value), strings.ToLower(search))
 }
 
-func (c *AccountsMemoryClientV1) matchSearch(item AccountV1, search string) bool {
+func (c *AccountsMockClientV1) matchSearch(item AccountV1, search string) bool {
 	search = strings.ToLower(search)
 	return c.matchString(item.Name, search)
 }
 
-func (c *AccountsMemoryClientV1) composeFilter(filter *cdata.FilterParams) func(item AccountV1) bool {
+func (c *AccountsMockClientV1) composeFilter(filter *cdata.FilterParams) func(item AccountV1) bool {
 	if filter == nil {
 		filter = cdata.NewEmptyFilterParams()
 	}
