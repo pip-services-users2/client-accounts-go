@@ -202,10 +202,10 @@ func (c *AccountsMockClientV1) composeFilter(filter *cdata.FilterParams) func(it
 		if activeOk && active != item.Active {
 			return false
 		}
-		if fromCreateTimeOK && item.CreateTime.Nanosecond() >= fromCreateTime.Nanosecond() {
+		if fromCreateTimeOK && item.CreateTime.Unix() >= fromCreateTime.Unix() {
 			return false
 		}
-		if toCreateTimeOk && item.CreateTime.Nanosecond() < toCreateTime.Nanosecond() {
+		if toCreateTimeOk && item.CreateTime.Unix() < toCreateTime.Unix() {
 			return false
 		}
 		if !deleted && item.Deleted {
