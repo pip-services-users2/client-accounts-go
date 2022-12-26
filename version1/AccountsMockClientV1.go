@@ -36,11 +36,14 @@ func NewEmptyAccountsMockClientV1() *AccountsMockClientV1 {
 
 func (c *AccountsMockClientV1) GetAccounts(ctx context.Context, correlationId string, filter *data.FilterParams,
 	paging *cdata.PagingParams) (result cdata.DataPage[*AccountV1], err error) {
+	filterFunc := c.composeFilter(filter)
 
 	items := make([]*AccountV1, 0)
 	for _, v := range c.accounts {
 		item := v
-		items = append(items, &item)
+		if filterFunc(item) {
+			items = append(items, &item)
+		}
 	}
 	return *cdata.NewDataPage(items, len(c.accounts)), nil
 }
@@ -177,6 +180,12 @@ func (c *AccountsMockClientV1) composeFilter(filter *cdata.FilterParams) func(it
 	toCreateTime, toCreateTimeOk := filter.GetAsNullableDateTime("to_create_time")
 	deleted := filter.GetAsBooleanWithDefault("deleted", false)
 
+	ids := make([]string, 0)
+
+	if idsStr := filter.GetAsString("ids"); idsStr != "" {
+		ids = strings.Split(idsStr, ",")
+	}
+
 	return func(item AccountV1) bool {
 		if search != "" && !c.matchSearch(item, search) {
 			return false
@@ -202,6 +211,19 @@ func (c *AccountsMockClientV1) composeFilter(filter *cdata.FilterParams) func(it
 		if !deleted && item.Deleted {
 			return false
 		}
+		if len(ids) > 0 && !contains(ids, item.Id) {
+			return false
+		}
 		return true
 	}
+}
+
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+
+	return false
 }
